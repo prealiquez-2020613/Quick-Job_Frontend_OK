@@ -76,3 +76,16 @@ export const getWorkersRequest = async()=> {
     return {error : true, err}
   }
 }
+
+//====================================================
+//==          RUTAS PARA JOBREQUEST                 ==
+//====================================================
+
+//CREAR JOBREQUEST
+export const createJobRequest = async (jobRequest) => {
+  try {
+    return await apiClient.post('/v1/jobrequests', jobRequest);
+  } catch (err) {
+    return { error: true, err };
+  }
+};
