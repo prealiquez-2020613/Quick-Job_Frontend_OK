@@ -84,7 +84,7 @@ export const getWorkersRequest = async()=> {
 //CREAR JOBREQUEST
 export const createJobRequest = async (jobRequest) => {
   try {
-    return await apiClient.post('/v1/jobrequests', jobRequest);
+    return await apiClient.post('/v1/jobrequest/jobrequests', jobRequest);
   } catch (err) {
     return { error: true, err };
   }
