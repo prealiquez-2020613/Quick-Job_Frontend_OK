@@ -35,6 +35,35 @@ export const loginRequest = async (user) => {
   }
 }
 
+// REGISTER
+export const registerRequest = async (userData) => {
+  try {
+    const res = await apiClient.post('/register', userData)
+    return { error: false, data: res.data, message: res.data.message }
+  } catch (err) {
+    return {
+      error: true,
+      status: err.response?.status,
+      message: err.response?.data?.message || 'Error en el registro',
+      err
+    }
+  }
+}
+
+// CATEGORÍAS
+export const getCategoriesRequest = async () => {
+  try {
+    const res = await apiClient.get('/v1/category/allcategories')
+    return { error: false, data: res.data.categories }
+  } catch (err) {
+    return {
+      error: true,
+      message: err.response?.data?.message || 'Error al obtener categorías'
+    }
+  }
+}
+
+
 //====================================================
 //==            RUTAS PARA USUARIOS                 ==
 //====================================================
