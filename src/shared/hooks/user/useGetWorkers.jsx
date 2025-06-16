@@ -12,7 +12,7 @@ export const useGetWorkers = () => {
                 response?.err?.response?.data?.message || 'Error al obtener los trabajadores'
             )
         }
-        setWorkers(response.data.workers)
+        setWorkers(response.data.users)
     }
   return {
     workers,

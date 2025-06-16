@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useWorkerContext } from '../../shared/hooks/user/useGetWorkersContext'
+import { useGetWorkersContext } from '../../shared/hooks/user/useGetWorkersContext'
 import { WorkerCard } from './WorkerCard'
 
 const carouselImages = [
@@ -9,7 +9,7 @@ const carouselImages = [
 ]
 
 export const WorkersList = () => {
-  const { workers, isFetchingWorkers } = useWorkerContext()
+  const { workers, isFetchingWorkers } = useGetWorkersContext()
   const [currentSlide, setCurrentSlide] = useState(0)
 
   if (isFetchingWorkers) return <div>Cargando trabajadores...</div>
