@@ -34,3 +34,16 @@ export const loginRequest = async (user) => {
     }
   }
 }
+
+//====================================================
+//==            RUTAS PARA USUARIOS                 ==
+//====================================================
+
+//OBTENER TRABAJADORES
+export const getWorkersRequest = async()=> {
+  try {
+    return await apiClient.get('v1/user/workers')
+  } catch (err) {
+    return {error : true, err}
+  }
+}
