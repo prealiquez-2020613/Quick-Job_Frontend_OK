@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const Register = () => {
   const [role, setRole] = useState("CLIENT");
-  const { formData, handleChange, handleSubmit, categories } = useRegister(role);
+  const { formData, handleChange, handleSubmit, categories, setImage } = useRegister(role);
 
   const departamentos = [
     'Alta Verapaz', 'Baja Verapaz', 'Chimaltenango', 'Chiquimula', 'Escuintla', 'Guatemala',
@@ -62,6 +62,13 @@ export const Register = () => {
               <input type="number" name="experienceYears" value={formData.experienceYears} onChange={handleChange} placeholder="Años de experiencia" className="w-full px-4 py-3 rounded-lg border border-blue-300" />
             </>
           )}
+
+          <input 
+            type="file" 
+            name="profileImage" 
+            onChange={(e) => setImage(e.target.files[0])} 
+            className="w-full px-4 py-3 rounded-lg border border-blue-300"
+          />
 
           <button type="submit" className="w-full px-4 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition">
             Registrarme

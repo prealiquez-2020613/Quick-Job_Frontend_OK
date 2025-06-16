@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import { registerRequest, getCategoriesRequest } from "../../../services/api";
+import axios from 'axios';
 
 export const useRegister = (role) => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export const useRegister = (role) => {
   });
 
   const [categories, setCategories] = useState([]);
+  const [image, setImage] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,17 +67,42 @@ export const useRegister = (role) => {
 
     const finalData = { ...baseData, ...workerExtras };
 
-    const { error, message } = await registerRequest(finalData);
-    if (error) return toast.error(message);
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', finalData.name);
+    formDataToSend.append('surname', finalData.surname);
+    formDataToSend.append('username', finalData.username);
+    formDataToSend.append('email', finalData.email);
+    formDataToSend.append('password', finalData.password);
+    formDataToSend.append('phone', finalData.phone);
+    formDataToSend.append('location', finalData.location);
+    formDataToSend.append('role', finalData.role);
 
-    toast.success(message);
-    navigate('/');
+    if (role === 'WORKER') {
+      formDataToSend.append('category', finalData.category);
+      formDataToSend.append('description', finalData.description);
+      formDataToSend.append('experienceYears', finalData.experienceYears);
+    }
+
+    if (image) {
+      formDataToSend.append('image', image);
+    }
+
+    try {
+      const { error, message } = await registerRequest(formDataToSend);
+      if (error) return toast.error(message);
+
+      toast.success(message);
+      navigate('/');
+    } catch (err) {
+      toast.error("Error en el registro");
+    }
   };
 
   return {
     formData,
     handleChange,
     handleSubmit,
-    categories
+    categories,
+    setImage
   };
 };
