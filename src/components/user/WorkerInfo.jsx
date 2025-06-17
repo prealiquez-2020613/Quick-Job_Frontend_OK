@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { JobRequestModal } from '../jobRequest/JobRequestModal'
 import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
 
 export const WorkerInfo = () => {
@@ -9,6 +10,7 @@ export const WorkerInfo = () => {
   const [worker, setWorker] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const socketRef = useRef(null)
 
   useEffect(() => {
@@ -57,6 +59,9 @@ export const WorkerInfo = () => {
   if (error) return <div className="pt-24 text-center">{error}</div>
   if (!worker) return <div className="pt-24 text-center">Trabajador no encontrado</div>
 
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto pt-24 px-6 md:px-16 space-y-10 md:space-y-0 md:space-x-14">
       <img
@@ -77,7 +82,16 @@ export const WorkerInfo = () => {
         >
           Contacta a {worker.name}
         </button>
+
+        <button
+          onClick={openModal}
+          className="mt-4 bg-blue-600 text-white text-lg font-semibold py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300"
+        >
+          Enviar solicitud de trabajo
+        </button>
       </div>
+
+      {isModalOpen && <JobRequestModal workerId={workerId} closeModal={closeModal} />}
     </div>
   )
 }

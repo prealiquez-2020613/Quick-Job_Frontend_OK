@@ -76,3 +76,48 @@ export const getWorkersRequest = async()=> {
     return {error : true, err}
   }
 }
+
+//====================================================
+//==          RUTAS PARA JOBREQUEST                 ==
+//====================================================
+
+//CREAR JOBREQUEST
+export const createJobRequest = async (jobRequest) => {
+  try {
+    return await apiClient.post('/v1/jobrequest/jobrequests', jobRequest);
+  } catch (err) {
+    return { error: true, err };
+  }
+};
+
+export const getClientJobRequests = async () => {
+  try {
+    return await apiClient.get('/v1/jobrequest/jobrequests/client');
+  } catch (err) {
+    return { error: true, err };
+  }
+};
+
+export const getWorkerJobRequests = async () => {
+  try {
+    return await apiClient.get('/v1/jobrequest/jobrequests/worker');
+  } catch (err) {
+    return { error: true, err };
+  }
+};
+
+export const updateJobRequestStatus = async (id, data) => {
+  try {
+    return await apiClient.put(`/v1/jobrequest/jobrequests/${id}`, data);
+  } catch (err) {
+    return { error: true, err };
+  }
+};
+
+export const deleteJobRequest = async (id) => {
+  try {
+    return await apiClient.delete(`/v1/jobrequest/deletejobrequests/${id}`);
+  } catch (err) {
+    return { error: true, err };
+  }
+};
