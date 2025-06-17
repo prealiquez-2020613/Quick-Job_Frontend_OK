@@ -6,6 +6,7 @@ import { WorkerInfo } from "./components/user/WorkerInfo";
 import { MainLayout } from "./MainLayout";
 import { JobRequestList } from "./components/jobRequest/JobRequestList";
 import { ChatRoom } from "./pages/ChatRoom";
+import ChatContainer from "./components/chat/ChatContainer.jsx";
 
 export const routes = [
   {
@@ -36,6 +37,10 @@ export const routes = [
         path: '/chat/:chatId',
         element: <ChatRoom />
       },
+      {
+        path: '/chats',  // Nueva ruta para los chats
+        element: <ChatContainer /> // Componente de los chats
+      }
     ]
   }
 ]

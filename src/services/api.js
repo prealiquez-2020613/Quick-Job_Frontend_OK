@@ -121,3 +121,45 @@ export const deleteJobRequest = async (id) => {
     return { error: true, err };
   }
 };
+
+// OBTENER TODOS LOS CHATS DEL USUARIO
+export const getUserChatsRequest = async () => {
+  try {
+    const res = await apiClient.get('/v1/chat/allchat')
+    return { error: false, data: res.data.chats }
+  } catch (err) {
+    return {
+      error: true,
+      message: err.response?.data?.message || 'Error al obtener los chats',
+      err
+    }
+  }
+}
+
+// CREAR O REUTILIZAR UN CHAT ENTRE DOS USUARIOS
+export const createOrGetChatRequest = async (participantId) => {
+  try {
+    const res = await apiClient.post('/v1/chat/createchat', { participantId })
+    return { error: false, data: res.data.chat }
+  } catch (err) {
+    return {
+      error: true,
+      message: err.response?.data?.message || 'Error al crear o obtener el chat',
+      err
+    }
+  }
+}
+
+// ENVIAR UN MENSAJE A UN CHAT
+export const sendMessageRequest = async (chatId, text) => {
+  try {
+    const res = await apiClient.post('/v1/chat/message', { chatId, text })
+    return { error: false, data: res.data.chat }
+  } catch (err) {
+    return {
+      error: true,
+      message: err.response?.data?.message || 'Error al enviar el mensaje',
+      err
+    }
+  }
+}

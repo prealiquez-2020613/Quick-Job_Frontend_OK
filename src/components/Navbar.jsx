@@ -51,14 +51,6 @@ export const Navbar = () => {
                 Buscar
               </Link>
             </li>
-            <li>
-              <Link
-                to="/nearby"
-                className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium transition"
-              >
-                Los más cercanos
-              </Link>
-            </li>
           </ul>
         </div>
 
@@ -72,6 +64,14 @@ export const Navbar = () => {
                 className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium transition"
               >
                 Mi Perfil
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/chats"
+                className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium transition"
+              >
+                Chats
               </Link>
             </li>
             <li>
