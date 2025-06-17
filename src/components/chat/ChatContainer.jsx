@@ -1,30 +1,27 @@
-import { useState } from 'react';
-import ChatList from './ChatList.jsx'; // Asegúrate de importar correctamente
-import useChats from '../../shared/hooks/chat/useChats.jsx'; // Importa el custom hook
+import { useState } from 'react'
+import ChatList from './ChatList.jsx'
+import {ChatRoom} from '../../pages/ChatRoom.jsx'
+import useChatStarter from '../../shared/hooks/chat/useChatStarter.jsx'
 
 const ChatContainer = () => {
-  const { chats, loading, error, selectedChatId, handleSelectChat } = useChats();
+  const [selectedChatId, setSelectedChatId] = useState(null)
 
-  if (loading) {
-    return <div>Loading chats...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const startChat = useChatStarter(setSelectedChatId)
 
   return (
-    <div className="flex">
-      <ChatList chats={chats} onSelectChat={handleSelectChat} />
-      {/* Aquí mostrarías el chat seleccionado */}
-      {selectedChatId && (
-        <div>
-          <h2>Chat seleccionado: {selectedChatId}</h2>
-          {/* Aquí puedes renderizar el chat específico que se ha seleccionado */}
+    <div className="flex h-screen overflow-hidden">
+      <ChatList onSelectChat={startChat} />   
+      {selectedChatId ? (
+        <div className="flex-1 border-l">
+          <ChatRoom chatId={selectedChatId} /> 
+        </div>
+      ) : (
+        <div className="flex-1 flex items-center justify-center text-gray-500">
+          Selecciona un contacto para empezar a chatear
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ChatContainer;
+export default ChatContainer
