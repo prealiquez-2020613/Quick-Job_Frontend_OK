@@ -1,7 +1,24 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 export const Navbar = () => {
   const navigate = useNavigate()
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem('token') 
+    setIsLoggedIn(!!token)
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setIsLoggedIn(false)
+    navigate('/')
+  }
+
+  const handleLogin = () => {
+    navigate('/')
+  }
 
   return (
     <nav className="bg-white w-72 min-h-screen p-6 shadow-lg flex flex-col justify-between border-r border-gray-200">
@@ -9,7 +26,7 @@ export const Navbar = () => {
       <div>
         <div className="mb-8">
           <img
-            src="https://res.cloudinary.com/djedsgxyh/image/upload/v1750047799/Quick-Job_Black_qhmmmc.png" // Usa tu logo aquí
+            src="https://res.cloudinary.com/djedsgxyh/image/upload/v1750047799/Quick-Job_Black_qhmmmc.png" 
             alt="QuickJob Logo"
             className="w-32 mx-auto"
           />
@@ -77,11 +94,11 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Botón login / usuario */}
+      {/* Botón login / logout */}
       <div className="mt-10">
         <button
-          onClick={() => navigate('/')}
-          aria-label="Ir a login"
+          onClick={isLoggedIn ? handleLogout : handleLogin}
+          aria-label={isLoggedIn ? "Cerrar sesión" : "Ir a login"}
           className="w-full flex items-center justify-center gap-3 text-gray-600 hover:text-blue-600 transition"
         >
           <img
@@ -89,7 +106,9 @@ export const Navbar = () => {
             alt="Usuario"
             className="h-10 w-10 object-cover rounded-full"
           />
-          <span className="font-medium">Iniciar sesión</span>
+          <span className="font-medium">
+            {isLoggedIn ? "Cerrar sesión" : "Iniciar sesión"}
+          </span>
         </button>
       </div>
     </nav>
