@@ -4,6 +4,7 @@ import { Register } from "./components/Regsiter";
 import { WorkersPage } from "./pages/WorkersPage";
 import { WorkerInfo } from "./components/user/WorkerInfo";
 import { MainLayout } from "./MainLayout";
+import { JobRequestList } from "./components/jobRequest/JobRequestList";
 
 
 export const routes = [
@@ -26,6 +27,10 @@ export const routes = [
       {
         path: '/worker/:workerId',
         element: <WorkerInfo />
+      },
+      {
+        path: '/history',
+        element: <JobRequestList />
       }
     ]
   }
