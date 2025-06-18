@@ -1,48 +1,119 @@
-import { useState, useEffect } from 'react'
-import { editProfileRequest } from "../../../services/api.js"
-import toast from 'react-hot-toast'
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
+import { getCategoriesRequest, editProfileRequest } from "../../../services/api";
+import axios from 'axios';
 
-export const useEditProfile = (role) => {
+export const useEditProfile = (userId) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
     username: '',
+    email: '',
+    phone: '',
+    location: '',
+    category: '',
     description: '',
-    category: ''
-  })
-  const [categories, setCategories] = useState([])
-  const [image, setImage] = useState(null)
+    experienceYears: ''
+  });
 
+  const [categories, setCategories] = useState([]);
+  const [image, setImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // Función para actualizar los datos
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
+  // Obtener categorías desde la API (como en el registro)
   const fetchCategories = async () => {
-    const response = await getCategoriesRequest()
-    if (!response.error) setCategories(response.data)
-  }
-
-  useEffect(() => {
-    if (role === 'WORKER') {
-      fetchCategories()
+    const res = await getCategoriesRequest();
+    if (!res.error) {
+      setCategories(res.data);
+    } else {
+      toast.error("Error al obtener categorías");
     }
-  }, [role])
+  };
 
+  // Obtener datos del usuario logueado para editar
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        toast.error('No se encontró un token de sesión');
+        return;
+      }
+
+      try {
+        const userResponse = await axios.get(`http://localhost:5400/v1/user/findUser`, {
+          headers: { Authorization: token }
+        });
+
+        if (userResponse.data.success) {
+          const user = userResponse.data.user;
+          setFormData({
+            ...user,
+            category: user.category?._id || '', // Asignar la categoría si es un trabajador
+          });
+        } else {
+          setError('Error al obtener datos del usuario');
+        }
+
+        fetchCategories();
+      } catch (err) {
+        setError('Error al obtener los datos del usuario');
+      }
+    };
+
+    fetchUser();
+  }, [userId]);
+
+  // Función para enviar los cambios de datos del usuario
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const finalData = { ...formData, role }
+    e.preventDefault();
+    setIsLoading(true);
 
-    if (image) finalData.image = image
+    const dataToSend = new FormData();
+    for (const key in formData) {
+      dataToSend.append(key, formData[key]);
+    }
+    if (image) dataToSend.append('image', image);
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('No se encontró un token de sesión');
+      setIsLoading(false);
+      return;
+    }
 
     try {
-      const response = await editProfileRequest(finalData)
-      if (response.error) throw new Error(response.message)
-      toast.success("Perfil actualizado correctamente")
+      const response = await editProfileRequest(dataToSend, token); // Enviar el token con la solicitud
+      if (response.error) throw new Error(response.message);
+      toast.success('Perfil actualizado correctamente');
+      window.location.reload();
     } catch (err) {
-      toast.error("Error al actualizar perfil")
+      setError(err.message || 'Error al actualizar el perfil');
+      toast.error(err.message || 'Error al actualizar el perfil');
+    } finally {
+      setIsLoading(false);
     }
-  }
+  };
 
-  return { formData, handleChange, handleSubmit, categories, setImage }
-}
+  return {
+    formData,
+    handleChange,
+    handleSubmit,
+    categories,
+    setImage,
+    isLoading,
+    error
+  };
+};
