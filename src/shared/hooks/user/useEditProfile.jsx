@@ -83,6 +83,8 @@ export const useEditProfile = (userId) => {
 
     const dataToSend = new FormData();
     for (const key in formData) {
+      if (key === 'password') continue; // evitar enviarlo
+      if ((key === 'category' || key === 'experienceYears') && formData.role !== 'WORKER') continue;
       dataToSend.append(key, formData[key]);
     }
     if (image) dataToSend.append('image', image);
