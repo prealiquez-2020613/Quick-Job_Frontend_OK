@@ -40,7 +40,11 @@ export const routes = [
       {
         path: '/chats',  // Nueva ruta para los chats
         element: <ChatContainer /> // Componente de los chats
-      }
+      },
+      {
+        path: '/search', 
+        element: <SearchPage />,
+      },
     ]
   }
 ]
