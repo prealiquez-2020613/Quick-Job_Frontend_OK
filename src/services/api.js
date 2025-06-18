@@ -163,3 +163,13 @@ export const sendMessageRequest = async (chatId, text) => {
     }
   }
 }
+
+export const getReviewsByWorkerId = async (workerId) => {
+  try {
+    const response = await apiClient.get(`/v1/review/reviews/received/${workerId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    return { error: true, message: error.response?.data?.message || 'Error fetching reviews' };
+  }
+};
