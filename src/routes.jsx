@@ -7,6 +7,7 @@ import { MainLayout } from "./MainLayout";
 import { JobRequestList } from "./components/jobRequest/JobRequestList";
 import { ChatRoom } from "./pages/ChatRoom";
 import ChatContainer from "./components/chat/ChatContainer.jsx";
+import SearchPage from "./pages/SearchPage.jsx";
 
 export const routes = [
   {

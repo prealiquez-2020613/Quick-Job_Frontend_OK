@@ -16,7 +16,6 @@ const SearchPage = () => {
 
   return (
     <div className="search-page">
-      <h1>Búsqueda de Trabajadores</h1>
       <SearchWorkers departments={departments} />
     </div>
   );
