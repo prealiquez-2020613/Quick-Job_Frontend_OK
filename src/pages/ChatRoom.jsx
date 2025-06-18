@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
 import { getCurrentUid } from '../util/token'
@@ -7,6 +7,7 @@ import { getCurrentUid } from '../util/token'
 export const ChatRoom = ({ chatId: propChatId }) => {
   const params = useParams()
   const chatId = propChatId || params.chatId
+  const navigate = useNavigate()
 
   const [chat, setChat] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -15,8 +16,8 @@ export const ChatRoom = ({ chatId: propChatId }) => {
 
   const currentUid = getCurrentUid()
 
-  const socketRef    = useRef(null)
-  const messagesRef  = useRef(null)  
+  const socketRef = useRef(null)
+  const messagesRef = useRef(null)
 
   useEffect(() => {
     if (!socketRef.current) {
@@ -73,13 +74,32 @@ export const ChatRoom = ({ chatId: propChatId }) => {
     setText('')
   }
 
+  const handleProfileClick = (userId) => {
+    navigate(`/worker/${userId}`)
+  }
+
   if (loading) return <div className="flex-1 flex items-center justify-center">Cargando chat…</div>
-  if (error)   return <div className="flex-1 flex items-center justify-center text-red-600">{error}</div>
-  if (!chat)   return <div className="flex-1 flex items-center justify-center">Chat no encontrado</div>
+  if (error) return <div className="flex-1 flex items-center justify-center text-red-600">{error}</div>
+  if (!chat) return <div className="flex-1 flex items-center justify-center">Chat no encontrado</div>
+
+  const otherUser = chat.participants?.find(p => p._id !== currentUid)
+  console.log(otherUser)
+  const profileImage = otherUser?.profileImage || 'https://res.cloudinary.com/djedsgxyh/image/upload/v1750035099/default-profile_reot90.jpg'
+  const userName = otherUser?.name || 'Usuario desconocido'
 
   return (
     <div className="flex flex-col h-full max-w-4xl mx-auto px-4">
-      <h2 className="text-2xl font-semibold mb-4">Chat entre usuarios</h2>
+      <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center gap-4">
+          <img
+            src={profileImage}
+            alt="Foto de perfil"
+            className="w-12 h-12 object-cover rounded-full cursor-pointer"
+            onClick={() => handleProfileClick(otherUser?._id)}
+          />
+          <span className="font-medium">{userName}</span>
+        </div>
+      </div>
 
       <ul
         ref={messagesRef}
