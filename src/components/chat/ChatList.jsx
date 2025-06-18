@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { getUserChatsRequest } from '../../services/api.js'
-import { getCurrentUid } from '../../util/token.js'   // o donde lo tengas
+import { getCurrentUid } from '../../util/token.js'
 
 const ChatList = ({ onSelectChat }) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -30,7 +30,7 @@ const ChatList = ({ onSelectChat }) => {
     )
   }), [chats, searchQuery, me])
 
-  const handleClick = (partnerId) => onSelectChat(partnerId) 
+  const handleClick = (partnerId) => onSelectChat(partnerId)
 
   if (loading) return <div>Loading chats...</div>
 
@@ -47,6 +47,11 @@ const ChatList = ({ onSelectChat }) => {
       <div className="flex flex-col space-y-4 overflow-y-auto">
         {filteredChats.map(chat => {
           const partner = chat.participants.find(p => p._id !== me)
+          const lastMessage = chat.lastMessage?.text
+          const displayMessage = lastMessage && lastMessage.length > 35 
+            ? `${lastMessage.substring(0, 35)}...` 
+            : lastMessage || 'No hay mensajes'
+
           return (
             <div
               key={chat._id}
@@ -63,7 +68,7 @@ const ChatList = ({ onSelectChat }) => {
                   {partner?.name} {partner?.surname}
                 </span>
                 <span className="text-sm text-gray-600 truncate max-w-xs">
-                  {chat.lastMessage ? chat.lastMessage.text : 'No hay mensajes'}
+                  {displayMessage}
                 </span>
               </div>
             </div>
