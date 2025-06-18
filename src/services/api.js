@@ -190,3 +190,12 @@ export const editProfileRequest = async (profileData) => {
     return { error: true, message: err.response?.data?.message || 'Error en la actualización' }
   }
 }
+
+export const changePasswordRequest = async ({ currentPassword, newPassword }) => {
+  try {
+    const res = await apiClient.put('/v1/user/updatePasswordUser', { currentPassword, newPassword })
+    return { error: false, data: res.data }
+  } catch (err) {
+    return { error: true, message: err.response?.data?.message || 'Error al cambiar la contraseña' }
+  }
+}
