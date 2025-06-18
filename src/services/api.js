@@ -199,3 +199,12 @@ export const changePasswordRequest = async ({ currentPassword, newPassword }) =>
     return { error: true, message: err.response?.data?.message || 'Error al cambiar la contraseña' }
   }
 }
+
+export const deleteAccountRequest = async ({ password }) => {
+  try {
+    const res = await apiClient.put('/v1/user/deleteAccount', { password })
+    return { error: false, data: res.data }
+  } catch (err) {
+    return { error: true, message: err.response?.data?.message || 'Error al borrar la cuenta' }
+  }
+}
