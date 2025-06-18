@@ -6,26 +6,23 @@ export const ChangePasswordModal = ({ closeModal }) => {
   const [actualPassword, setActualPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [validation, setValidation] = useState({
+    actualPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  })
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  const isDisabled =
+    !actualPassword || !newPassword || !confirmPassword ||
+    newPassword !== confirmPassword ||
+    Object.values(validation).some(v => v)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!actualPassword || !newPassword || !confirmPassword) {
-      setError('Todos los campos son obligatorios')
-      return
-    }
-
-    if (newPassword !== confirmPassword) {
-      setError("Las contraseñas no coinciden")
-      return
-    }
-
-    if (newPassword.length < 8) {
-      setError("La nueva contraseña debe tener al menos 8 caracteres")
-      return
-    }
+    if (isDisabled) return
 
     setError('')
     setIsLoading(true)
@@ -51,31 +48,56 @@ export const ChangePasswordModal = ({ closeModal }) => {
             type="password"
             name="actualPassword"
             value={actualPassword}
-            onChange={(e) => setActualPassword(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value
+              setActualPassword(value)
+              setValidation((prev) => ({ ...prev, actualPassword: value.trim() === '' ? 'Campo requerido' : '' }))
+            }}
             placeholder="Contraseña Actual"
-            className="w-full px-4 py-3 rounded-lg border border-blue-300 mb-4"
+            className="w-full px-4 py-3 rounded-lg border border-blue-300 mb-1"
           />
+          {validation.actualPassword && <span className="text-red-600 text-sm">{validation.actualPassword}</span>}
+
           <input
             type="password"
             name="newPassword"
             value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value
+              setNewPassword(value)
+              setValidation((prev) => ({ ...prev, newPassword: value.trim() === '' ? 'Campo requerido' : '' }))
+            }}
             placeholder="Nueva Contraseña"
-            className="w-full px-4 py-3 rounded-lg border border-blue-300 mb-4"
+            className="w-full px-4 py-3 rounded-lg border border-blue-300 mb-1"
           />
+          {validation.newPassword && <span className="text-red-600 text-sm">{validation.newPassword}</span>}
+
           <input
             type="password"
             name="confirmPassword"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value
+              setConfirmPassword(value)
+              setValidation((prev) => ({
+                ...prev,
+                confirmPassword:
+                  value.trim() === '' ? 'Campo requerido' :
+                  value !== newPassword ? 'Las contraseñas no coinciden' : ''
+              }))
+            }}
             placeholder="Confirmar Nueva Contraseña"
-            className="w-full px-4 py-3 rounded-lg border border-blue-300 mb-4"
+            className="w-full px-4 py-3 rounded-lg border border-blue-300 mb-1"
           />
+          {validation.confirmPassword && <span className="text-red-600 text-sm">{validation.confirmPassword}</span>}
+
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <button
             type="submit"
-            className={`w-full px-4 py-3 rounded-lg bg-blue-600 text-white font-medium ${isLoading && 'opacity-50'}`}
-            disabled={isLoading}
+            className={`w-full px-4 py-3 rounded-lg text-white font-medium ${
+              isDisabled || isLoading ? 'bg-blue-300 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+            }`}
+            disabled={isDisabled || isLoading}
           >
             {isLoading ? 'Cambiando...' : 'Cambiar Contraseña'}
           </button>
