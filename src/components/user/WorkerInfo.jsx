@@ -5,6 +5,7 @@ import { JobRequestModal } from '../jobRequest/JobRequestModal'
 import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
 import ReviewsList from '../review/ReviewList'
 import { useGetReviews } from '../../shared/hooks/review/useGetReviews';
+import { ReviewModal } from '../review/ReviewModal'
 
 export const WorkerInfo = () => {
   const { workerId } = useParams()
@@ -13,6 +14,7 @@ export const WorkerInfo = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const socketRef = useRef(null)
 
   const { reviews, isLoading: reviewsLoading, error: reviewsError } = useGetReviews(workerId);
@@ -66,6 +68,9 @@ export const WorkerInfo = () => {
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
 
+  const openReviewModal = () => setIsReviewModalOpen(true);
+  const closeReviewModal = () => setIsReviewModalOpen(false);
+
   return (
     <>
     <div className="flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto pt-24 px-6 md:px-16 space-y-10 md:space-y-0 md:space-x-14">
@@ -101,9 +106,18 @@ export const WorkerInfo = () => {
         >
           Enviar solicitud de trabajo
         </button>
+
+        <button
+            onClick={openReviewModal}
+            className="mt-4 bg-green-600 text-white text-lg font-semibold py-3 px-6 rounded-md hover:bg-green-700 transition duration-300"
+          >
+            Reseñar a {worker.name}
+          </button>
+
       </div>
 
       {isModalOpen && <JobRequestModal workerId={workerId} closeModal={closeModal} />}
+      {isReviewModalOpen && (<ReviewModal receiverId={workerId} closeModal={closeReviewModal} receiverName={worker.name} />)}
     </div>
     <div className="flex flex-col md:flex-row items-center justify-center max-w-7xl mx-auto pt-24 px-6 md:px-16 space-y-10 md:space-y-0 md:space-x-14">
       {reviewsLoading ? (
