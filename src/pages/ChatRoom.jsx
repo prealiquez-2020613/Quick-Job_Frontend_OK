@@ -83,13 +83,13 @@ export const ChatRoom = ({ chatId: propChatId }) => {
   if (!chat) return <div className="flex-1 flex items-center justify-center">Chat no encontrado</div>
 
   const otherUser = chat.participants?.find(p => p._id !== currentUid)
-  console.log(otherUser)
   const profileImage = otherUser?.profileImage || 'https://res.cloudinary.com/djedsgxyh/image/upload/v1750035099/default-profile_reot90.jpg'
   const userName = otherUser?.name || 'Usuario desconocido'
 
   return (
     <div className="flex flex-col h-full max-w-4xl mx-auto px-4">
-      <div className="flex items-center justify-between p-4 border-b">
+      {/* Barra superior con la foto de perfil y el nombre */}
+      <div className="flex items-center justify-between p-4 bg-gray-800 text-white rounded-t-md shadow-md">
         <div className="flex items-center gap-4">
           <img
             src={profileImage}
@@ -101,9 +101,10 @@ export const ChatRoom = ({ chatId: propChatId }) => {
         </div>
       </div>
 
-      <ul
+      {/* Mensajes */}
+      <div
         ref={messagesRef}
-        className="space-y-2 flex-1 overflow-y-auto border p-3 rounded-md"
+        className="flex flex-col flex-1 overflow-y-auto p-3 bg-white space-y-2"
         style={{ maxHeight: '70vh' }}
       >
         {chat.messages.length === 0 ? (
@@ -112,17 +113,23 @@ export const ChatRoom = ({ chatId: propChatId }) => {
           chat.messages.map((m) => {
             const own = m.sender?._id?.toString() === currentUid
             return (
-              <li key={m._id} className="border p-2 rounded-md">
+              <div
+                key={m._id}
+                className={`p-3 ${own ? 'bg-black text-white self-end rounded-l-2xl rounded-br-2xl' : 'bg-gray-200 text-black self-start rounded-r-2xl rounded-bl-2xl'}`}
+                style={{
+                  display: 'inline-block',
+                  wordBreak: 'break-word',
+                  maxWidth: '70%',
+                }}
+              >
                 <strong>{own ? 'Tú' : m.sender?.name || 'Usuario'}</strong>: {m.text}
                 <br />
-                <small className="text-gray-500">
-                  {new Date(m.timestamp).toLocaleString()}
-                </small>
-              </li>
+                <small className="text-gray-500">{new Date(m.timestamp).toLocaleString()}</small>
+              </div>
             )
           })
         )}
-      </ul>
+      </div>
 
       <form onSubmit={handleSubmit} className="mt-4 flex">
         <input
