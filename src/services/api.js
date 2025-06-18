@@ -173,3 +173,11 @@ export const getReviewsByWorkerId = async (workerId) => {
     return { error: true, message: error.response?.data?.message || 'Error fetching reviews' };
   }
 };
+
+export const createReview = async (review) => {
+  try {
+    return await apiClient.post('/v1/review/createReview', review);
+  } catch (err) {
+    return { error: true, err };
+  }
+};
