@@ -1,17 +1,25 @@
 import { useState } from 'react'
 import { deleteAccountRequest } from '../../services/api'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 export const DeleteAccountModal = ({ closeModal }) => {
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   const handleDelete = async () => {
     setIsLoading(true)
     try {
       const response = await deleteAccountRequest({ password })
       if (response.error) throw new Error(response.message)
+
       toast.success('Cuenta borrada exitosamente')
+
+      localStorage.removeItem('token')
+      navigate('/')
+
       closeModal()
     } catch (err) {
       setError(err.message || 'Error al borrar la cuenta')
