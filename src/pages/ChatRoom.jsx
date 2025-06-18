@@ -75,7 +75,7 @@ export const ChatRoom = ({ chatId: propChatId }) => {
   }
 
   const handleProfileClick = (userId) => {
-    navigate(`/worker/${userId}`)
+    navigate(`/user/${userId}`)
   }
 
   if (loading) return <div className="flex-1 flex items-center justify-center">Cargando chat…</div>

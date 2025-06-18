@@ -4,7 +4,7 @@ export const WorkerCard = ({ _id, name, category, ratingAverage, profileImage })
   const navigate = useNavigate()
 
   const goToWorkerProfile = () => {
-    navigate(`/worker/${_id}`)
+    navigate(`/user/${_id}`)
   }
 
   return (

@@ -27,7 +27,7 @@ export const routes = [
         element: <WorkersPage />
       },
       {
-        path: '/worker/:workerId',
+        path: '/user/:workerId',
         element: <WorkerInfo />
       },
       {
