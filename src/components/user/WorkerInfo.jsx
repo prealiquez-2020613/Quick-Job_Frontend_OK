@@ -81,7 +81,11 @@ export const WorkerInfo = () => {
       />
       <div className="flex flex-col justify-center max-w-2xl text-left">
         <h2 className="text-4xl font-bold leading-tight">{worker.name} {worker.surname}</h2>
-        <p className="text-gray-500 text-xl mt-1">{worker.category?.name || 'Sin categoría'}</p>
+        
+        {/* Si es un "Client", la categoría cambia a "Empleador" */}
+        <p className="text-gray-500 text-xl mt-1">
+          {worker.role === 'CLIENT' ? 'Empleador' : worker.category?.name || 'Sin categoría'}
+        </p>
         
         <div className="mt-2">
           <strong className="text-lg">Calificación Promedio:</strong>
@@ -91,21 +95,28 @@ export const WorkerInfo = () => {
 
         <p className="text-gray-900 text-md mt-6 leading-relaxed">
           <strong className="block mb-1">Acerca de {worker.name}:</strong>
-          {worker.description || 'Este trabajador aún no ha escrito una descripción personal.'}
+          {worker.description || 'Este Usuario aún no ha escrito una descripción personal.'}
         </p>
-        <button
-          onClick={handleContactClick}
-          className="mt-8 bg-black text-white text-lg font-semibold py-3 px-6 rounded-md hover:bg-gray-800 transition duration-300"
-        >
-          Contacta a {worker.name}
-        </button>
 
-        <button
-          onClick={openModal}
-          className="mt-4 bg-blue-600 text-white text-lg font-semibold py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300"
-        >
-          Enviar solicitud de trabajo
-        </button>
+        {/* Mostrar el botón de contacto solo si el usuario es un "Worker" */}
+        {worker.role === 'WORKER' && (
+          <button
+            onClick={handleContactClick}
+            className="mt-8 bg-black text-white text-lg font-semibold py-3 px-6 rounded-md hover:bg-gray-800 transition duration-300"
+          >
+            Contacta a {worker.name}
+          </button>
+        )}
+
+        {/* Mostrar el botón de "Enviar solicitud de trabajo" solo si el usuario es un "Worker" */}
+        {worker.role === 'WORKER' && (
+          <button
+            onClick={openModal}
+            className="mt-4 bg-blue-600 text-white text-lg font-semibold py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300"
+          >
+            Enviar solicitud de trabajo
+          </button>
+        )}
 
         <button
             onClick={openReviewModal}
