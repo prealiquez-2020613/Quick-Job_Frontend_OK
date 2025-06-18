@@ -191,9 +191,9 @@ export const editProfileRequest = async (profileData) => {
   }
 }
 
-export const changePasswordRequest = async ({ currentPassword, newPassword }) => {
+export const changePasswordRequest = async ({ actualPassword, newPassword }) => {
   try {
-    const res = await apiClient.put('/v1/user/updatePasswordUser', { currentPassword, newPassword })
+    const res = await apiClient.put('/v1/user/updatePasswordUser', { actualPassword, newPassword })
     return { error: false, data: res.data }
   } catch (err) {
     return { error: true, message: err.response?.data?.message || 'Error al cambiar la contraseña' }

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { changePasswordRequest } from '../../services/api'
+import toast from 'react-hot-toast'
 
 export const ChangePasswordModal = ({ closeModal }) => {
-  const [currentPassword, setCurrentPassword] = useState('')
+  const [actualPassword, setActualPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
@@ -10,14 +11,27 @@ export const ChangePasswordModal = ({ closeModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (!actualPassword || !newPassword || !confirmPassword) {
+      setError('Todos los campos son obligatorios')
+      return
+    }
+
     if (newPassword !== confirmPassword) {
       setError("Las contraseñas no coinciden")
       return
     }
 
+    if (newPassword.length < 8) {
+      setError("La nueva contraseña debe tener al menos 8 caracteres")
+      return
+    }
+
+    setError('')
     setIsLoading(true)
+
     try {
-      const response = await changePasswordRequest({ currentPassword, newPassword })
+      const response = await changePasswordRequest({ actualPassword, newPassword })
       if (response.error) throw new Error(response.message)
       toast.success('Contraseña cambiada correctamente')
       closeModal()
@@ -35,11 +49,11 @@ export const ChangePasswordModal = ({ closeModal }) => {
         <form onSubmit={handleSubmit}>
           <input
             type="password"
-            name="currentPassword"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
+            name="actualPassword"
+            value={actualPassword}
+            onChange={(e) => setActualPassword(e.target.value)}
             placeholder="Contraseña Actual"
-            className="w-full px-4 py-3 rounded-lg border border-blue-300"
+            className="w-full px-4 py-3 rounded-lg border border-blue-300 mb-4"
           />
           <input
             type="password"
@@ -47,7 +61,7 @@ export const ChangePasswordModal = ({ closeModal }) => {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             placeholder="Nueva Contraseña"
-            className="w-full px-4 py-3 rounded-lg border border-blue-300"
+            className="w-full px-4 py-3 rounded-lg border border-blue-300 mb-4"
           />
           <input
             type="password"
@@ -55,9 +69,9 @@ export const ChangePasswordModal = ({ closeModal }) => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Confirmar Nueva Contraseña"
-            className="w-full px-4 py-3 rounded-lg border border-blue-300"
+            className="w-full px-4 py-3 rounded-lg border border-blue-300 mb-4"
           />
-          {error && <p className="text-red-500">{error}</p>}
+          {error && <p className="text-red-500 mb-4">{error}</p>}
           <button
             type="submit"
             className={`w-full px-4 py-3 rounded-lg bg-blue-600 text-white font-medium ${isLoading && 'opacity-50'}`}
