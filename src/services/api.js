@@ -208,3 +208,12 @@ export const deleteAccountRequest = async ({ password }) => {
     return { error: true, message: err.response?.data?.message || 'Error al borrar la cuenta' }
   }
 }
+
+export const getLoggedUserRequest = async () => {
+  try {
+    const res = await apiClient.get('/v1/user/findUser/me')
+    return { error: false, data: res.data }
+  } catch (err) {
+    return { error: true, message: err.response?.data?.message || 'Error al obtener datos del usuario' }
+  }
+}
