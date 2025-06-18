@@ -181,3 +181,12 @@ export const createReview = async (review) => {
     return { error: true, err };
   }
 };
+
+export const editProfileRequest = async (profileData) => {
+  try {
+    const res = await apiClient.put('/v1/user/updateUser', profileData)
+    return { error: false, data: res.data }
+  } catch (err) {
+    return { error: true, message: err.response?.data?.message || 'Error en la actualización' }
+  }
+}
