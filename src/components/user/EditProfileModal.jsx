@@ -24,7 +24,7 @@ export const EditProfileModal = ({ closeModal }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto">
         <h2 className="text-3xl font-bold mb-4">Editar Perfil</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
 
@@ -71,14 +71,6 @@ export const EditProfileModal = ({ closeModal }) => {
                 ))}
               </select>
 
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Descripción del trabajador"
-                className="w-full px-4 py-3 rounded-lg border border-blue-300"
-              />
-
               <input
                 type="number"
                 name="experienceYears"
@@ -89,6 +81,14 @@ export const EditProfileModal = ({ closeModal }) => {
               />
             </>
           )}
+
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Descripción del usuario"
+            className="w-full px-4 py-3 rounded-lg border border-blue-300"
+          />
 
           <input
             type="file"
