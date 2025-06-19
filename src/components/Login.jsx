@@ -99,6 +99,12 @@ export const Login = () => {
             Login
           </button>
         </form>
+        <p className="mt-6 text-center text-black">
+          ¿No tienes una cuenta?{" "}
+          <Link to="/register" className="text-blue-600 font-semibold hover:underline">
+            Registrarse
+          </Link>
+        </p>
       </div>
     </div>
   );
