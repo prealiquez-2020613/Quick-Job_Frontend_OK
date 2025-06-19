@@ -163,3 +163,57 @@ export const sendMessageRequest = async (chatId, text) => {
     }
   }
 }
+
+export const getReviewsByWorkerId = async (workerId) => {
+  try {
+    const response = await apiClient.get(`/v1/review/reviews/user/${workerId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    return { error: true, message: error.response?.data?.message || 'Error fetching reviews' };
+  }
+};
+
+export const createReview = async (review) => {
+  try {
+    return await apiClient.post('/v1/review/createReview', review);
+  } catch (err) {
+    return { error: true, err };
+  }
+};
+
+export const editProfileRequest = async (profileData) => {
+  try {
+    const res = await apiClient.put('/v1/user/updateUser', profileData)
+    return { error: false, data: res.data }
+  } catch (err) {
+    return { error: true, message: err.response?.data?.message || 'Error en la actualización' }
+  }
+}
+
+export const changePasswordRequest = async ({ actualPassword, newPassword }) => {
+  try {
+    const res = await apiClient.put('/v1/user/updatePasswordUser', { actualPassword, newPassword })
+    return { error: false, data: res.data }
+  } catch (err) {
+    return { error: true, message: err.response?.data?.message || 'Error al cambiar la contraseña' }
+  }
+}
+
+export const deleteAccountRequest = async ({ password }) => {
+  try {
+    const res = await apiClient.put('/v1/user/deleteAccount', { password })
+    return { error: false, data: res.data }
+  } catch (err) {
+    return { error: true, message: err.response?.data?.message || 'Error al borrar la cuenta' }
+  }
+}
+
+export const getLoggedUserRequest = async () => {
+  try {
+    const res = await apiClient.get('/v1/user/findUser/me')
+    return { error: false, data: res.data }
+  } catch (err) {
+    return { error: true, message: err.response?.data?.message || 'Error al obtener datos del usuario' }
+  }
+}

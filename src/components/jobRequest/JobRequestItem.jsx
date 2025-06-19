@@ -20,18 +20,6 @@ export const JobRequestItem = ({ request, isSent }) => {
     setLoading(false);
   };
 
-  const handleDelete = async () => {
-    const confirm = window.confirm('¿Estás seguro de eliminar esta solicitud?');
-    if (confirm) {
-      const response = await deleteJobRequest(request._id);
-      if (response.error) {
-        toast.error('Error al eliminar la solicitud');
-      } else {
-        toast.success('Solicitud eliminada');
-      }
-    }
-  };
-
   // Lógica para habilitar/deshabilitar botones según el estado
   const isSentPending = isSent && status === 'PENDING';
   const isSentConfirmed = isSent && status === 'CONFIRMED';
@@ -53,7 +41,7 @@ export const JobRequestItem = ({ request, isSent }) => {
       <div className="mt-2 text-gray-800">{request.description}</div>
 
       <div className="mt-4">
-        <strong>Precio acordado: </strong>${request.agreedPrice}
+        <strong>Precio: </strong>${request.agreedPrice}
       </div>
 
       <div className="mt-4 flex gap-4">
@@ -106,13 +94,6 @@ export const JobRequestItem = ({ request, isSent }) => {
             Completado
           </button>
         )}
-
-        <button
-          onClick={handleDelete}
-          className="bg-red-600 text-white px-4 py-2 rounded-lg"
-        >
-          Eliminar
-        </button>
       </div>
 
       <div className="mt-4 text-gray-600">

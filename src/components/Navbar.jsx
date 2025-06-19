@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
+import { Home, Search, User, MessageSquare, Clock, LogIn, LogOut } from 'lucide-react'
+
 export const Navbar = () => {
   const navigate = useNavigate()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -40,6 +42,7 @@ export const Navbar = () => {
                 to="/home"
                 className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium transition"
               >
+                <Home className="w-5 h-5" />
                 Inicio
               </Link>
             </li>
@@ -48,6 +51,7 @@ export const Navbar = () => {
                 to="/search"
                 className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium transition"
               >
+                <Search className="w-5 h-5" />
                 Buscar
               </Link>
             </li>
@@ -63,6 +67,7 @@ export const Navbar = () => {
                 to="/profile"
                 className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium transition"
               >
+                <User className="w-5 h-5" />
                 Mi Perfil
               </Link>
             </li>
@@ -71,6 +76,7 @@ export const Navbar = () => {
                 to="/chats"
                 className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium transition"
               >
+                <MessageSquare className="w-5 h-5" />
                 Chats
               </Link>
             </li>
@@ -79,15 +85,8 @@ export const Navbar = () => {
                 to="/history"
                 className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium transition"
               >
+                <Clock className="w-5 h-5" />
                 Historial
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/reviews"
-                className="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium transition"
-              >
-                Mis reseñas
               </Link>
             </li>
           </ul>
@@ -109,6 +108,11 @@ export const Navbar = () => {
           <span className="font-medium">
             {isLoggedIn ? "Cerrar sesión" : "Iniciar sesión"}
           </span>
+          {isLoggedIn ? (
+            <LogOut className="w-5 h-5" />
+          ) : (
+            <LogIn className="w-5 h-5" />
+          )}
         </button>
       </div>
     </nav>
