@@ -21,7 +21,7 @@ export const WorkerInfo = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token') || ''
-    socketRef.current = io('https://quick-job-backend-ok.onrender.com', {
+    socketRef.current = io('https://quick-job-backend-ok.vercel.app', {
       auth: { token },
       autoConnect: true
     })
@@ -30,7 +30,7 @@ export const WorkerInfo = () => {
   useEffect(() => {
     const fetchWorker = async () => {
       try {
-        const { data } = await axios.get(`https://quick-job-backend-ok.onrender.com/v1/user/findUser/${workerId}`)
+        const { data } = await axios.get(`https://quick-job-backend-ok.vercel.app/v1/user/findUser/${workerId}`)
         setWorker(data.user)
       } catch {
         setError('Error al cargar información del trabajador')
