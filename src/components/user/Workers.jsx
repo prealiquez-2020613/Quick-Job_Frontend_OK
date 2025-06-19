@@ -73,7 +73,7 @@ export const WorkersList = () => {
       {Object.entries(groupedByCategory).map(([categoryName, categoryWorkers]) => (
         <div key={categoryName} className="mb-10">
           <h2 className="text-2xl font-bold">{categoryName}</h2>
-          <p className="text-gray-500 mb-4">Los más recientes en tu área.</p>
+          <p className="text-gray-500 mb-4">Nuevos Usuarios</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
             {categoryWorkers.slice(0, 4).map(worker => (
               <WorkerCard
