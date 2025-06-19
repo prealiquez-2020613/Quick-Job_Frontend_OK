@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useLogin } from '../shared/hooks/login/useLogin.jsx';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const { login } = useLogin();
+  const navigate = useNavigate();
 
   const [checkValidation, setCheckValidation] = useState({
     identifier: undefined,
@@ -14,9 +15,12 @@ export const Login = () => {
 
   const disabledButton = checkValidation.identifier === '' && checkValidation.password === '';
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(identifier, password);
+    const result = await login(identifier, password);
+    if (result?.success) {
+      navigate('/home');
+    }
   };
 
   const handleIdentifierChange = (e) => {
@@ -40,7 +44,6 @@ export const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4 py-12">
       <div className="bg-white w-full max-w-md rounded-3xl shadow-md px-10 py-10">
-        {/* Logo */}
         <div className="flex justify-center mb-8">
           <img
             src="https://res.cloudinary.com/djedsgxyh/image/upload/v1750047799/Quick-Job_Black_qhmmmc.png"
@@ -49,13 +52,11 @@ export const Login = () => {
           />
         </div>
 
-        {/* Título */}
         <h2 className="text-center text-xl font-bold mb-2 text-black">Log In</h2>
         <p className="text-center text-sm text-black mb-6">
           Ingresa tu username o correo para ingresar
         </p>
 
-        {/* Formulario */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input
