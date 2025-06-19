@@ -13,7 +13,8 @@ export const Register = () => {
     username: undefined,
     email: undefined,
     password: undefined,
-    phone: undefined
+    phone: undefined,
+    description: undefined,
   });
 
   const handleImageChange = (e) => {
@@ -37,7 +38,8 @@ export const Register = () => {
       password: /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/.test(value)
         ? ""
         : "La contraseña debe tener entre 8 y 16 caracteres, un número, una mayúscula, una minúscula y un carácter especial.",
-      phone: value.length >= 8 ? "" : "El número debe tener al menos 8 dígitos"
+      phone: value.length >= 8 ? "" : "El número debe tener al menos 8 dígitos",
+      description: value.length > 0 ? "" : "La descripción no puede estar vacía",
     };
     setCheckValidation({ ...checkValidation, [field]: validations[field] });
   };
@@ -47,7 +49,7 @@ export const Register = () => {
     handleValidationChange(e.target.name, e.target.value);
   };
 
-  const requiredFields = ["name", "surname", "username", "email", "password", "phone"];
+  const requiredFields = ["name", "surname", "username", "email", "password", "phone", "description"];
   const disabledButton = requiredFields.every((field) => checkValidation[field] === "");
 
   const departamentos = [
@@ -86,7 +88,6 @@ export const Register = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           {["name", "surname", "username", "email", "password", "phone"].map((field) => (
             <div key={field}>
               <input
@@ -109,6 +110,17 @@ export const Register = () => {
               )}
             </div>
           ))}
+
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+            placeholder="Descripción"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300"
+          />
+          {checkValidation.description && (
+            <p className="text-sm text-red-600 font-semibold mt-1">{checkValidation.description}</p>
+          )}
 
           <select
             name="location"
@@ -135,14 +147,6 @@ export const Register = () => {
                   <option key={cat._id} value={cat._id}>{cat.name}</option>
                 ))}
               </select>
-
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Descripción del trabajador"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300"
-              />
 
               <input
                 type="number"
