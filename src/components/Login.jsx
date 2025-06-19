@@ -1,59 +1,68 @@
-import { useState } from 'react'
-import { useLogin } from '../shared/hooks/login/useLogin.jsx'
-import { Link } from 'react-router-dom'
+import { useState } from 'react';
+import { useLogin } from '../shared/hooks/login/useLogin.jsx';
+import { Link } from 'react-router-dom';
 
 export const Login = () => {
-  const [identifier, setIdentifier] = useState("")
-  const [password, setPassword] = useState("")
-  const { login } = useLogin()
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
+  const { login } = useLogin();
 
   const [checkValidation, setCheckValidation] = useState({
     identifier: undefined,
     password: undefined,
-  })
+  });
 
-  const disabledButton = checkValidation.identifier === "" && checkValidation.password === ""
+  const disabledButton = checkValidation.identifier === '' && checkValidation.password === '';
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    login(identifier, password)
-  }
+    e.preventDefault();
+    login(identifier, password);
+  };
 
   const handleIdentifierChange = (e) => {
-    const value = e.target.value
+    const value = e.target.value;
     setCheckValidation({
       ...checkValidation,
-      identifier: value.length > 0 ? "" : 'Identifier field cannot be empty',
-    })
-    setIdentifier(value)
-  }
+      identifier: value.length > 0 ? '' : 'El campo no puede estar vacío',
+    });
+    setIdentifier(value);
+  };
 
   const handlePasswordChange = (e) => {
-    const value = e.target.value
+    const value = e.target.value;
     setCheckValidation({
       ...checkValidation,
-      password: value.length > 0 ? "" : 'Password field cannot be empty',
-    })
-    setPassword(value)
-  }
+      password: value.length > 0 ? '' : 'El campo no puede estar vacío',
+    });
+    setPassword(value);
+  };
 
   return (
-    <div className="min-h-screen bg-blue-50 flex items-center justify-center px-6 py-12">
-      <div className="max-w-md w-full bg-white p-10 rounded-2xl shadow-xl border border-blue-200">
-        <h1 className="text-3xl font-serif font-bold text-blue-800 mb-6 text-center">
-          INICIO DE SESIÓN
-        </h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4 py-12">
+      <div className="bg-white w-full max-w-md rounded-3xl shadow-md px-10 py-10">
+        {/* Logo */}
+        <div className="flex justify-center mb-8">
+          <img
+            src="https://res.cloudinary.com/djedsgxyh/image/upload/v1750047799/Quick-Job_Black_qhmmmc.png"
+            alt="Quick Job"
+            className="h-20 object-contain"
+          />
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Título */}
+        <h2 className="text-center text-xl font-bold mb-2 text-black">Log In</h2>
+        <p className="text-center text-sm text-black mb-6">
+          Ingresa tu username o correo para ingresar
+        </p>
 
+        {/* Formulario */}
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input
               id="identifier"
               type="text"
-              placeholder="Username or gmail"
-              className={`w-full px-4 py-3 rounded-lg border ${
-                checkValidation.identifier ? 'border-red-600' : 'border-blue-300'
-              } text-blue-900 placeholder-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 transition`}
+              placeholder="Email or username"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-400"
               value={identifier}
               onChange={handleIdentifierChange}
               autoComplete="identifier"
@@ -67,10 +76,8 @@ export const Login = () => {
             <input
               id="password"
               type="password"
-              placeholder="Contraseña"
-              className={`w-full px-4 py-3 rounded-lg border ${
-                checkValidation.password ? 'border-red-600' : 'border-blue-300'
-              } text-blue-900 placeholder-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-600 transition`}
+              placeholder="Password"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-400"
               value={password}
               onChange={handlePasswordChange}
               autoComplete="current-password"
@@ -82,27 +89,17 @@ export const Login = () => {
 
           <button
             disabled={!disabledButton}
-            className={`w-full px-4 py-3 rounded-lg font-medium text-white shadow-md transition-colors ${
+            className={`w-full px-4 py-3 rounded-lg font-medium text-white transition ${
               disabledButton
-                ? 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
-                : 'bg-blue-300 cursor-not-allowed'
+                ? 'bg-black hover:opacity-90 cursor-pointer'
+                : 'bg-gray-400 cursor-not-allowed'
             }`}
             type="submit"
           >
             Login
           </button>
         </form>
-
-        <p className="mt-6 text-center text-blue-700">
-          Are you new here?{' '}
-          <Link to="/register" className="text-blue-600 font-semibold hover:underline">
-            Register
-          </Link>
-        </p>
-
-        <div className="mt-8 flex justify-center">
-        </div>
       </div>
     </div>
-  )
-}
+  );
+};
