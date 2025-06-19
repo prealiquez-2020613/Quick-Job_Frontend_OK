@@ -16,7 +16,9 @@ export const MyProfile = () => {
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] = useState(false)
   const [isDeleteAccountModalOpen, setIsDeleteAccountModalOpen] = useState(false)
 
-  const { reviews, isLoading: reviewsLoading, error: reviewsError } = useGetReviews()
+  const [userId, setUserId] = useState(null)
+
+  const { reviews, isLoading: reviewsLoading, error: reviewsError } = useGetReviews(userId)
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -25,6 +27,7 @@ export const MyProfile = () => {
           headers: { Authorization: localStorage.getItem('token') }
         })
         setUser(data.user)
+        setUserId(data.user._id)
       } catch (err) {
         setError('Error al cargar la información del usuario')
       } finally {
