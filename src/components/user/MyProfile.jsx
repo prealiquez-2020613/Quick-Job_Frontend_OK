@@ -23,7 +23,7 @@ export const MyProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5400/v1/user/findUser', {
+        const { data } = await axios.get('https://quick-job-backend-ok.onrender.com/v1/user/findUser', {
           headers: { Authorization: localStorage.getItem('token') }
         })
         setUser(data.user)
