@@ -166,7 +166,7 @@ export const sendMessageRequest = async (chatId, text) => {
 
 export const getReviewsByWorkerId = async (workerId) => {
   try {
-    const response = await apiClient.get(`/v1/review/reviews/received/${workerId}`);
+    const response = await apiClient.get(`/v1/review/reviews/user/${workerId}`);
     return response.data;
   } catch (error) {
     console.error('Error fetching reviews:', error);
