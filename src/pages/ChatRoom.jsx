@@ -21,7 +21,7 @@ export const ChatRoom = ({ chatId: propChatId }) => {
 
   useEffect(() => {
     if (!socketRef.current) {
-      socketRef.current = io('http://localhost:5400', {
+      socketRef.current = io('https://quick-job-backend-ok.onrender.com', {
         auth: { token: localStorage.getItem('token') }
       })
     }
@@ -41,7 +41,7 @@ export const ChatRoom = ({ chatId: propChatId }) => {
     (async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:5400/v1/chat/get/${chatId}`,
+          `https://quick-job-backend-ok.onrender.com/v1/chat/get/${chatId}`,
           { headers: { Authorization: localStorage.getItem('token') } }
         )
         setChat(data.chat)

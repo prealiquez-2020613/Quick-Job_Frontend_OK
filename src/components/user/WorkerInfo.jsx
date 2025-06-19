@@ -21,7 +21,7 @@ export const WorkerInfo = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token') || ''
-    socketRef.current = io('http://localhost:5400', {
+    socketRef.current = io('https://quick-job-backend-ok.onrender.com', {
       auth: { token },
       autoConnect: true
     })
@@ -30,7 +30,7 @@ export const WorkerInfo = () => {
   useEffect(() => {
     const fetchWorker = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5400/v1/user/findUser/${workerId}`)
+        const { data } = await axios.get(`https://quick-job-backend-ok.onrender.com/v1/user/findUser/${workerId}`)
         setWorker(data.user)
       } catch {
         setError('Error al cargar información del trabajador')

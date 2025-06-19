@@ -7,7 +7,7 @@ export default function useChatStarter (onReady) {
 
   useEffect(() => {
     const token = localStorage.getItem('token') || ''
-    socketRef.current = io('http://localhost:5400', {
+    socketRef.current = io('https://quick-job-backend-ok.onrender.com', {
       auth: { token },
       autoConnect: true
     })

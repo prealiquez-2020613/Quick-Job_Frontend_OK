@@ -2,7 +2,7 @@ import axios from "axios";
 
 const apiClient = axios.create(
   {
-    baseURL: 'http://localhost:5400',
+    baseURL: 'https://quick-job-backend-ok.onrender.com',
     timeout: 2000
   }
 )
