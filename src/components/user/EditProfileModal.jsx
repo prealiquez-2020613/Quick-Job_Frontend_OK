@@ -90,12 +90,41 @@ export const EditProfileModal = ({ closeModal }) => {
             className="w-full px-4 py-3 rounded-lg border border-blue-300"
           />
 
-          <input
-            type="file"
-            name="profileImage"
-            onChange={(e) => setImage(e.target.files[0])}
-            className="w-full px-4 py-3 rounded-lg border border-blue-300"
-          />
+          <div>
+            <label
+              htmlFor="profileImage"
+              className="w-full inline-block bg-black text-white font-semibold py-3 px-6 text-center rounded-lg cursor-pointer hover:bg-gray-700 transition"
+            >
+              Subir Foto de Perfíl
+            </label>
+            <input
+              id="profileImage"
+              type="file"
+              name="profileImage"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                setImage(file);
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    const preview = document.getElementById('imagePreview');
+                    if (preview) preview.src = reader.result;
+                  };
+                  reader.readAsDataURL(file);
+                }
+              }}
+              className="hidden"
+            />
+
+            <div className="mt-4">
+              <img
+                id="imagePreview"
+                className="w-40 h-40 object-cover rounded-full mx-auto border border-gray-300 shadow-sm"
+                src="https://res.cloudinary.com/djedsgxyh/image/upload/v1750035099/default-profile_reot90.jpg"
+              />
+            </div>
+          </div>
 
           <button
             type="submit"
