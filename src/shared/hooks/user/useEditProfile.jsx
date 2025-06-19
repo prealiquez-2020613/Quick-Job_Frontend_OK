@@ -53,7 +53,7 @@ export const useEditProfile = (userId) => {
       }
 
       try {
-        const userResponse = await axios.get(`https://quick-job-backend-ok.onrender.com/v1/user/findUser`, {
+        const userResponse = await axios.get(`https://quick-job-backend-ok.vercel.app/v1/user/findUser`, {
           headers: { Authorization: token }
         });
 

@@ -7,7 +7,7 @@ export default function useChatStarter (onReady) {
 
   useEffect(() => {
     const token = localStorage.getItem('token') || ''
-    socketRef.current = io('https://quick-job-backend-ok.onrender.com', {
+    socketRef.current = io('https://quick-job-backend-ok.vercel.app', {
       auth: { token },
       autoConnect: true
     })
