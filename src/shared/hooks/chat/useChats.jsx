@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getUserChatsRequest } from '../../../services/api.js'; // Asegúrate de que la función esté importada correctamente
+import { getUserChatsRequest } from '../../../services/api.js';
 
 const useChats = () => {
   const [chats, setChats] = useState([]);
@@ -15,7 +15,7 @@ const useChats = () => {
         if (error) {
           setError(data.message);
         } else {
-          setChats(data); // Aquí guardamos los chats obtenidos
+          setChats(data); // guardamos los chats obtenidos
         }
       } catch (err) {
         setError('Error al obtener los chats');

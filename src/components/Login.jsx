@@ -42,8 +42,8 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4 py-12">
-      <div className="bg-white w-full max-w-md rounded-3xl shadow-md px-10 py-10">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 via-blue-300 to-blue-400 px-4 py-12">
+      <div className="bg-white w-full max-w-md rounded-3xl shadow-lg px-10 py-10">
         <div className="flex justify-center mb-8">
           <img
             src="https://res.cloudinary.com/djedsgxyh/image/upload/v1750047799/Quick-Job_Black_qhmmmc.png"
@@ -52,9 +52,9 @@ export const Login = () => {
           />
         </div>
 
-        <h2 className="text-center text-xl font-bold mb-2 text-black">Log In</h2>
-        <p className="text-center text-sm text-black mb-6">
-          Ingresa tu username o correo para ingresar
+        <h2 className="text-center text-2xl font-bold mb-2 text-blue-800">Iniciar Sesión</h2>
+        <p className="text-center text-sm text-blue-700 mb-6">
+          Ingresa tu nombre de usuario o correo electrónico
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -62,8 +62,8 @@ export const Login = () => {
             <input
               id="identifier"
               type="text"
-              placeholder="Email or username"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-400"
+              placeholder="Email o nombre de usuario"
+              className="w-full px-4 py-3 rounded-lg border border-blue-300 text-blue-900 placeholder-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={identifier}
               onChange={handleIdentifierChange}
               autoComplete="identifier"
@@ -77,8 +77,8 @@ export const Login = () => {
             <input
               id="password"
               type="password"
-              placeholder="Password"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-400"
+              placeholder="Contraseña"
+              className="w-full px-4 py-3 rounded-lg border border-blue-300 text-blue-900 placeholder-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={password}
               onChange={handlePasswordChange}
               autoComplete="current-password"
@@ -90,20 +90,20 @@ export const Login = () => {
 
           <button
             disabled={!disabledButton}
-            className={`w-full px-4 py-3 rounded-lg font-medium text-white transition ${
+            className={`w-full px-4 py-3 rounded-lg font-semibold text-white transition duration-200 ${
               disabledButton
-                ? 'bg-black hover:opacity-90 cursor-pointer'
-                : 'bg-gray-400 cursor-not-allowed'
+                ? 'bg-blue-700 hover:bg-blue-800 cursor-pointer'
+                : 'bg-blue-300 cursor-not-allowed'
             }`}
             type="submit"
           >
-            Login
+            Iniciar Sesión
           </button>
         </form>
-        <p className="mt-6 text-center text-black">
-          ¿No tienes una cuenta?{" "}
-          <Link to="/register" className="text-blue-600 font-semibold hover:underline">
-            Registrarse
+        <p className="mt-6 text-center text-blue-800">
+          ¿No tienes una cuenta?{' '}
+          <Link to="/register" className="text-blue-900 font-semibold hover:underline">
+            Regístrate
           </Link>
         </p>
       </div>

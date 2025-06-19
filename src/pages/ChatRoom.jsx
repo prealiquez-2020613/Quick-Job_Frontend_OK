@@ -78,9 +78,9 @@ export const ChatRoom = ({ chatId: propChatId }) => {
     navigate(`/user/${userId}`)
   }
 
-  if (loading) return <div className="flex-1 flex items-center justify-center">Cargando chat…</div>
+  if (loading) return <div className="flex-1 flex items-center justify-center text-blue-600">Cargando chat…</div>
   if (error) return <div className="flex-1 flex items-center justify-center text-red-600">{error}</div>
-  if (!chat) return <div className="flex-1 flex items-center justify-center">Chat no encontrado</div>
+  if (!chat) return <div className="flex-1 flex items-center justify-center text-gray-600">Chat no encontrado</div>
 
   const otherUser = chat.participants?.find(p => p._id !== currentUid)
   const profileImage = otherUser?.profileImage || 'https://res.cloudinary.com/djedsgxyh/image/upload/v1750035099/default-profile_reot90.jpg'
@@ -89,12 +89,12 @@ export const ChatRoom = ({ chatId: propChatId }) => {
   return (
     <div className="flex flex-col h-full max-w-4xl mx-auto px-4">
       {/* Barra superior con la foto de perfil y el nombre */}
-      <div className="flex items-center justify-between p-4 bg-gray-800 text-white rounded-t-md shadow-md">
+      <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-800 to-blue-600 text-white rounded-t-md shadow-md">
         <div className="flex items-center gap-4">
           <img
             src={profileImage}
             alt="Foto de perfil"
-            className="w-12 h-12 object-cover rounded-full cursor-pointer"
+            className="w-12 h-12 object-cover rounded-full cursor-pointer hover:ring-2 hover:ring-blue-300 transition-all"
             onClick={() => handleProfileClick(otherUser?._id)}
           />
           <span className="font-medium">{userName}</span>
@@ -108,14 +108,14 @@ export const ChatRoom = ({ chatId: propChatId }) => {
         style={{ maxHeight: '70vh' }}
       >
         {chat.messages.length === 0 ? (
-          <p className="text-gray-500">No hay mensajes aún.</p>
+          <p className="text-gray-500 text-center py-8">No hay mensajes aún.</p>
         ) : (
           chat.messages.map((m) => {
             const own = m.sender?._id?.toString() === currentUid
             return (
               <div
                 key={m._id}
-                className={`p-3 ${own ? 'bg-black text-white self-end rounded-l-2xl rounded-br-2xl' : 'bg-gray-200 text-black self-start rounded-r-2xl rounded-bl-2xl'}`}
+                className={`p-3 ${own ? 'bg-blue-600 text-white self-end rounded-l-2xl rounded-br-2xl' : 'bg-gray-200 text-black self-start rounded-r-2xl rounded-bl-2xl'}`}
                 style={{
                   display: 'inline-block',
                   wordBreak: 'break-word',
@@ -124,7 +124,7 @@ export const ChatRoom = ({ chatId: propChatId }) => {
               >
                 <strong>{own ? 'Tú' : m.sender?.name || 'Usuario'}</strong>: {m.text}
                 <br />
-                <small className="text-gray-500">{new Date(m.timestamp).toLocaleString()}</small>
+                <small className={own ? 'text-blue-200' : 'text-gray-500'}>{new Date(m.timestamp).toLocaleString()}</small>
               </div>
             )
           })
@@ -135,10 +135,10 @@ export const ChatRoom = ({ chatId: propChatId }) => {
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="flex-1 border rounded-l-md p-2"
+          className="flex-1 border border-blue-300 rounded-l-md p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Escribe un mensaje"
         />
-        <button className="bg-blue-600 text-white px-4 rounded-r-md">
+        <button className="bg-blue-600 text-white px-4 rounded-r-md hover:bg-blue-700 transition-colors">
           Enviar
         </button>
       </form>

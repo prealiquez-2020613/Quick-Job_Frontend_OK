@@ -1,4 +1,3 @@
-// src/shared/hooks/chat/useChatStarter.jsx
 import { useEffect, useRef, useCallback } from 'react'
 import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
 

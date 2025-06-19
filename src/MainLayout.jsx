@@ -1,10 +1,9 @@
-
 import { Navbar } from './components/Navbar.jsx'
 import { Outlet } from "react-router-dom"
 
 export const MainLayout = () => {
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-stone-100">
       {/* Navbar a la izquierda */}
       <Navbar />
 

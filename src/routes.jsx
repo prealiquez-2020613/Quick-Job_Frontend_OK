@@ -1,4 +1,3 @@
-// src/routes.jsx
 import { Login } from "./components/Login";
 import { Register } from "./components/Regsiter";
 import { WorkersPage } from "./pages/WorkersPage";

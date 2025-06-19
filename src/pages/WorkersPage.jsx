@@ -3,10 +3,10 @@ import { GetWorkersProvider } from "../context/GetWorkersContext";
 
 export const WorkersPage = () => {
   return (
-    <>
-    <GetWorkersProvider>
+    <div className="bg-gray-50 min-h-screen">
+      <GetWorkersProvider>
         <WorkersList/>
-    </GetWorkersProvider>
-    </>
+      </GetWorkersProvider>
+    </div>
   )
 }

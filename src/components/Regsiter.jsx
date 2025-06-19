@@ -60,8 +60,8 @@ export const Register = () => {
   ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200 px-4 py-12">
-      <div className="bg-white w-full max-w-md rounded-3xl shadow-md px-10 py-10 overflow-y-auto max-h-screen">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 via-blue-300 to-blue-400 px-4 py-12">
+      <div className="bg-white w-full max-w-md rounded-3xl shadow-xl px-10 py-10 overflow-y-auto max-h-screen border border-blue-100">
         <div className="flex justify-center mb-8">
           <img
             src="https://res.cloudinary.com/djedsgxyh/image/upload/v1750047799/Quick-Job_Black_qhmmmc.png"
@@ -70,18 +70,26 @@ export const Register = () => {
           />
         </div>
 
-        <h2 className="text-center text-xl font-bold mb-4 text-black">Registro</h2>
+        <h2 className="text-center text-xl font-bold mb-4 text-blue-700">Registro</h2>
 
         <div className="flex justify-center mb-6 gap-4">
           <button
             onClick={() => setRole("CLIENT")}
-            className={`px-4 py-2 rounded-lg font-medium ${role === 'CLIENT' ? 'bg-black text-white' : 'bg-gray-200 text-black'}`}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+              role === 'CLIENT'
+                ? 'bg-blue-600 text-white shadow-md'
+                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+            }`}
           >
             CLIENTE
           </button>
           <button
             onClick={() => setRole("WORKER")}
-            className={`px-4 py-2 rounded-lg font-medium ${role === 'WORKER' ? 'bg-black text-white' : 'bg-gray-200 text-black'}`}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+              role === 'WORKER'
+                ? 'bg-blue-600 text-white shadow-md'
+                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+            }`}
           >
             TRABAJADOR
           </button>
@@ -103,7 +111,7 @@ export const Register = () => {
                   field === "password" ? "Contraseña" :
                   "Teléfono"
                 }
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-400"
+                className="w-full px-4 py-3 rounded-lg border border-blue-200 text-blue-700 placeholder-blue-400 bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all"
               />
               {checkValidation[field] && (
                 <p className="text-sm text-red-600 font-semibold mt-1">{checkValidation[field]}</p>
@@ -116,7 +124,7 @@ export const Register = () => {
             value={formData.description}
             onChange={handleInputChange}
             placeholder="Descripción"
-            className="w-full px-4 py-3 rounded-lg border border-gray-300"
+            className="w-full px-4 py-3 rounded-lg border border-blue-200 text-blue-700 placeholder-blue-400 bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all"
           />
           {checkValidation.description && (
             <p className="text-sm text-red-600 font-semibold mt-1">{checkValidation.description}</p>
@@ -126,7 +134,7 @@ export const Register = () => {
             name="location"
             value={formData.location}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 text-black placeholder-gray-400"
+            className="w-full px-4 py-3 rounded-lg border border-blue-200 text-blue-700 bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all"
           >
             <option value="">Seleccione ubicación</option>
             {departamentos.map((dep, idx) => (
@@ -140,7 +148,7 @@ export const Register = () => {
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-lg border border-gray-300"
+                className="w-full px-4 py-3 rounded-lg border border-blue-200 text-blue-700 bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all"
               >
                 <option value="">Seleccione una categoría</option>
                 {categories.map((cat) => (
@@ -154,28 +162,28 @@ export const Register = () => {
                 value={formData.experienceYears}
                 onChange={handleChange}
                 placeholder="Años de experiencia"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300"
+                className="w-full px-4 py-3 rounded-lg border border-blue-200 text-blue-700 placeholder-blue-400 bg-white focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all"
               />
             </>
           )}
 
           <div className="space-y-2">
             <label className="block w-full">
-              <span className="block text-sm font-medium text-gray-700 mb-1">Foto de Perfil</span>
+              <span className="block text-sm font-medium text-blue-700 mb-1">Foto de Perfil</span>
               <input
                 type="file"
                 name="profileImage"
                 onChange={handleImageChange}
-                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
+                className="block w-full text-sm text-blue-600 file:mr-4 file:py-2 file:px-4
                 file:rounded-lg file:border-0 file:text-sm file:font-semibold
-                file:bg-black file:text-white hover:file:opacity-90"
+                file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:transition-colors"
               />
             </label>
             {imagePreview && (
               <img
                 src={imagePreview}
                 alt="preview"
-                className="w-32 h-32 rounded-full object-cover mx-auto border border-gray-300 mt-2"
+                className="w-32 h-32 rounded-full object-cover mx-auto border-2 border-blue-200 mt-2"
               />
             )}
           </div>
@@ -183,17 +191,19 @@ export const Register = () => {
           <button
             type="submit"
             disabled={!disabledButton}
-            className={`w-full px-4 py-3 rounded-lg font-medium text-white transition ${
-              disabledButton ? 'bg-black hover:opacity-90 cursor-pointer' : 'bg-gray-400 cursor-not-allowed'
+            className={`w-full px-4 py-3 rounded-lg font-medium text-white transition-all ${
+              disabledButton
+                ? 'bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg cursor-pointer'
+                : 'bg-blue-300 cursor-not-allowed'
             }`}
           >
             Registrarme
           </button>
         </form>
 
-        <p className="mt-6 text-center text-black">
+        <p className="mt-6 text-center text-blue-700">
           ¿Ya tienes una cuenta?{" "}
-          <Link to="/" className="text-blue-600 font-semibold hover:underline">
+          <Link to="/" className="text-blue-600 font-semibold hover:text-blue-800 hover:underline transition-colors">
             Iniciar sesión
           </Link>
         </p>

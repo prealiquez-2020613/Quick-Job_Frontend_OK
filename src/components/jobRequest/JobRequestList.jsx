@@ -43,19 +43,19 @@ export const JobRequestList = () => {
       ? filterRequests(sentRequests)
       : filterRequests(receivedRequests);
 
-  if (loading) return <div>Cargando solicitudes...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <div className="flex items-center justify-center p-8 text-blue-600">Cargando solicitudes...</div>;
+  if (error) return <div className="flex items-center justify-center p-8 text-red-600">{error}</div>;
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-semibold mb-6">Solicitudes de Trabajo</h2>
+      <h2 className="text-3xl font-semibold mb-6 text-blue-800">Solicitudes de Trabajo</h2>
 
       {/* Filtros */}
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <select
           value={requestType}
           onChange={handleRequestTypeChange}
-          className="px-4 py-2 border border-gray-300 rounded"
+          className="px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="sent">Solicitudes Enviadas</option>
           <option value="received">Solicitudes Recibidas</option>
@@ -64,7 +64,7 @@ export const JobRequestList = () => {
         <select
           value={statusFilter}
           onChange={handleStatusFilterChange}
-          className="px-4 py-2 border border-gray-300 rounded"
+          className="px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="ALL">Todos los Estados</option>
           <option value="PENDING">Pendiente</option>
@@ -75,7 +75,7 @@ export const JobRequestList = () => {
       </div>
 
       {currentRequests.length === 0 ? (
-        <p>No hay solicitudes que coincidan con los filtros seleccionados.</p>
+        <p className="text-gray-600 text-center py-8">No hay solicitudes que coincidan con los filtros seleccionados.</p>
       ) : (
         currentRequests.map((request) => (
           <JobRequestItem
