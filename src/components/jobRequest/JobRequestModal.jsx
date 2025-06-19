@@ -29,7 +29,7 @@ export const JobRequestModal = ({ workerId, closeModal }) => {
             />
             </div>
             <div className="mb-4">
-            <label className="block text-lg font-medium">Precio acordado</label>
+            <label className="block text-lg font-medium">Oferta</label>
             <input
                 type="number"
                 className="w-full p-2 border border-gray-300 rounded-lg"
