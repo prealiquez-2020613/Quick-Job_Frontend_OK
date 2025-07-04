@@ -4,8 +4,8 @@ import { WorkerCard } from './WorkerCard'
 
 const carouselImages = [
   { url: 'https://res.cloudinary.com/djedsgxyh/image/upload/v1750036149/banner01_gb3ocn.jpg' },
-  { url: 'https://cdn-fgcbo.nitrocdn.com/LhXwybchMmlYzxHNbFxKYWKAyaZEuWNH/assets/images/optimized/rev-b348688/www.totalmobile.com/wp-content/uploads/2023/03/mobile-worker-header.jpg' },
-  { url: 'https://fastlabourhire.com.au/wp-content/uploads/2022/03/blog-image-0061.webp' },
+  { url: 'https://res.cloudinary.com/djedsgxyh/image/upload/v1751601217/banner02_v0lui6.jpg' },
+  { url: 'https://res.cloudinary.com/djedsgxyh/image/upload/v1751602367/banner03_rpmsni.jpg' },
 ]
 
 export const WorkersList = () => {
